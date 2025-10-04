@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 app.use(cors());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('User_Management Server is running...')
@@ -29,7 +30,14 @@ app.get('/users', (req, res)=>{
 //   post user  //
 //--------------//
 app.post('/users', (req, res)=>{
-    res.send(users);
+    console.log('users post method', req.body);
+    const newUser = req.body;
+    newUser.id = users.length + 1;
+
+    //add user to database
+    users.push(newUser);
+
+    res.send(newUser);
 })
 
 
